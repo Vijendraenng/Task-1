@@ -8,9 +8,14 @@ export default function Login() {
 
   if (user) return <Navigate to="/dashboard" replace />;
 
+  const handleLogin = (email) => {
+    login(email);
+    navigate("/dashboard");
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-slate-100 p-4">
-      <LoginForm onSubmit={(email) => { login(email); navigate("/dashboard"); }} />
+      <LoginForm onSubmit={handleLogin} />
     </div>
   );
 }

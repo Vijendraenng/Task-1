@@ -1,37 +1,58 @@
 import { useState } from "react";
+import Input from "../ui/Input";
+import Select from "../ui/Select";
+import Button from "../ui/Button";
+
+const STATUS_OPTIONS = ["Active", "Inactive", "Pending"];
 
 export default function AddCustomerForm({ onSave }) {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", plan: "Basic", status: "Active" });
-  const [error, setError] = useState("");
+  const [form, setForm] = useState({ name: "", email: "", phone: "", status: "Active" });
+  const [errors, setErrors] = useState({});
+  const [submitted, setSubmitted] = useState(false); // success UI state
+
   const set = (key) => (e) => setForm({ ...form, [key]: e.target.value });
 
-  const handleSave = () => {
-    if (!form.name.trim() || !/^\S+@\S+\.\S+$/.test(form.email)) {
-      setError("Name and a valid email are required.");
-      return;
-    }
-    onSave(form);
+  const validate = () => {
+    const err = {};
+    if (!form.name.trim()) err.name = "Name is required.";
+    if (!/^\S+@\S+\.\S+$/.test(form.email)) err.email = "Enter a valid email address.";
+    if (!/^[0-9+\-\s]{7,15}$/.test(form.phone.trim())) err.phone = "Enter a valid phone number.";
+    return err;
   };
 
-  const input = "w-full border rounded px-3 py-2 mb-3";
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const err = validate();
+    setErrors(err);
+    if (Object.keys(err).length > 0) return;
+
+    setSubmitted(true);
+    // Small delay so the success state is visible before the modal closes.
+    setTimeout(() => onSave(form), 700);
+  };
+
+  if (submitted) {
+    return (
+      <div className="text-center py-8">
+        <div className="text-green-600 text-3xl mb-2" aria-hidden>✓</div>
+        <p className="font-medium">Customer added successfully</p>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <input placeholder="Full name" className={input} value={form.name} onChange={set("name")} />
-      <input placeholder="Email" className={input} value={form.email} onChange={set("email")} />
-      <input placeholder="Phone" className={input} value={form.phone} onChange={set("phone")} />
-      <div className="flex gap-3">
-        <select className={input} value={form.plan} onChange={set("plan")}>
-          <option>Basic</option><option>Standard</option><option>Premium</option>
-        </select>
-        <select className={input} value={form.status} onChange={set("status")}>
-          <option>Active</option><option>Inactive</option><option>Pending</option>
-        </select>
-      </div>
-      {error && <p className="text-xs text-red-600 mb-2">{error}</p>}
-      <button onClick={handleSave} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded">
-        Save customer
-      </button>
-    </div>
+    <form onSubmit={handleSubmit} noValidate className="space-y-3">
+      <Input label="Name" value={form.name} onChange={set("name")} error={errors.name} />
+      <Input label="Email" type="email" value={form.email} onChange={set("email")} error={errors.email} />
+      <Input
+        label="Phone"
+        value={form.phone}
+        onChange={set("phone")}
+        error={errors.phone}
+        placeholder="e.g. 98765 43210"
+      />
+      <Select label="Status" value={form.status} onChange={set("status")} options={STATUS_OPTIONS} />
+      <Button type="submit" className="w-full mt-2">Save customer</Button>
+    </form>
   );
 }

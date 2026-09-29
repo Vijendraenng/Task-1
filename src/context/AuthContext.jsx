@@ -5,10 +5,12 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(() => localStorage.getItem("user"));
 
+  // No real authentication: logging in just records who "you" are.
   const login = (email) => {
     localStorage.setItem("user", email);
     setUser(email);
   };
+
   const logout = () => {
     localStorage.removeItem("user");
     setUser(null);

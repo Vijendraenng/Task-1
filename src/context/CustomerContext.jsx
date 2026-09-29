@@ -1,10 +1,12 @@
 import { createContext, useContext, useState } from "react";
-import { customers as initial } from "../data/mockData";
+import { customers as initialCustomers } from "../data/mockData";
 
 const CustomerContext = createContext(null);
 
+// Holds the customer list in memory so the Dashboard's "Total Customers"
+// card and the Customers page always agree, without prop drilling.
 export function CustomerProvider({ children }) {
-  const [customers, setCustomers] = useState(initial);
+  const [customers, setCustomers] = useState(initialCustomers);
 
   const addCustomer = (data) =>
     setCustomers((prev) => [
@@ -12,7 +14,11 @@ export function CustomerProvider({ children }) {
       ...prev,
     ]);
 
-  return <CustomerContext.Provider value={{ customers, addCustomer }}>{children}</CustomerContext.Provider>;
+  return (
+    <CustomerContext.Provider value={{ customers, addCustomer }}>
+      {children}
+    </CustomerContext.Provider>
+  );
 }
 
 export const useCustomers = () => useContext(CustomerContext);
