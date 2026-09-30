@@ -10,8 +10,10 @@ export default function DateRangeFilter({ value, onChange }) {
       {RANGES.map((r) => (
         <button
           key={r.value}
+          type="button"
+          aria-pressed={value === r.value}
           onClick={() => onChange(r.value)}
-          className={`px-3 py-1.5 text-sm rounded-md transition-colors ${
+          className={`px-3 py-1.5 text-sm rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
             value === r.value ? "bg-indigo-600 text-white" : "text-gray-600 hover:bg-slate-100"
           }`}
         >

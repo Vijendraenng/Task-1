@@ -4,11 +4,12 @@ const variants = {
   ghost: "text-indigo-600 hover:underline px-0 py-0",
 };
 
-export default function Button({ variant = "primary", className = "", children, ...props }) {
+export default function Button({ variant = "primary", type = "button", className = "", children, ...props }) {
   return (
     <button
+      type={type}
       {...props}
-      className={`px-4 py-2 rounded font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${variants[variant]} ${className}`}
+      className={`px-4 py-2 rounded font-medium text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 ${variants[variant]} ${className}`}
     >
       {children}
     </button>

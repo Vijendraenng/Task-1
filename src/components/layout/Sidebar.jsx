@@ -13,7 +13,7 @@ export default function Sidebar({ open, onNavigate }) {
         transition-transform duration-200 ease-in-out`}
     >
       <div className="text-lg font-semibold text-white mb-6">Service Desk</div>
-      <nav className="space-y-1">
+      <nav className="space-y-1" aria-label="Primary navigation">
         {links.map((l) => (
           <NavLink
             key={l.to}

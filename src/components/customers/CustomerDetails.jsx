@@ -16,7 +16,7 @@ export default function CustomerDetails({ customer }) {
       <dd className="col-span-2"><Badge status={customer.status} /></dd>
 
       <dt className="text-gray-500">Joined</dt>
-      <dd className="col-span-2">{customer.joined}</dd>
+      <dd className="col-span-2">{customer.joined || "—"}</dd>
     </dl>
   );
 }

@@ -51,12 +51,14 @@ export default function RecentRequestsTable({ requests }) {
         <h2 className="font-semibold">Recent service requests</h2>
         <div className="flex flex-col sm:flex-row gap-2">
           <Input
+            aria-label="Search requests by ID, customer or service"
             placeholder="Search ID, customer or service"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="sm:w-64"
           />
           <Select
+            aria-label="Filter requests by status"
             value={status}
             onChange={(e) => setStatus(e.target.value)}
             options={STATUS_OPTIONS}
@@ -78,8 +80,8 @@ export default function RecentRequestsTable({ requests }) {
             {visibleRequests.map((r) => (
               <tr key={r.id} className="border-t">
                 <td className="px-4 py-3 whitespace-nowrap">{r.id}</td>
-                <td className="px-4 py-3 whitespace-nowrap">{r.customer}</td>
-                <td className="px-4 py-3 whitespace-nowrap">{r.service}</td>
+                <td className="px-4 py-3 max-w-[160px] truncate" title={r.customer}>{r.customer}</td>
+                <td className="px-4 py-3 max-w-[160px] truncate" title={r.service}>{r.service}</td>
                 <td className="px-4 py-3 whitespace-nowrap">{r.date}</td>
                 <td className="px-4 py-3"><Badge status={r.status} /></td>
               </tr>

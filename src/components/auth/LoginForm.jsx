@@ -19,7 +19,7 @@ export default function LoginForm({ onSubmit }) {
     e.preventDefault();
     const err = validate();
     setErrors(err);
-    if (Object.keys(err).length === 0) onSubmit(email);
+    if (Object.keys(err).length === 0) onSubmit(email.trim());
   };
 
   return (

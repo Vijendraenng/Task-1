@@ -56,7 +56,10 @@ export default function Customers() {
 
       {adding && (
         <Modal title="Add customer" onClose={() => setAdding(false)}>
-          <AddCustomerForm onSave={handleAdd} />
+          <AddCustomerForm
+            onSave={handleAdd}
+            existingEmails={customers.map((c) => c.email.toLowerCase())}
+          />
         </Modal>
       )}
     </>

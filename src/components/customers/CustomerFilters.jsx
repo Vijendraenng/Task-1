@@ -8,12 +8,14 @@ export default function CustomerFilters({ query, setQuery, status, setStatus, on
   return (
     <div className="flex flex-col sm:flex-row gap-3 mb-4">
       <Input
+        aria-label="Search customers by name or email"
         placeholder="Search by name or email"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         className="flex-1"
       />
       <Select
+        aria-label="Filter customers by status"
         value={status}
         onChange={(e) => setStatus(e.target.value)}
         options={STATUS_OPTIONS}

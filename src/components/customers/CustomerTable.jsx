@@ -19,9 +19,13 @@ export default function CustomerTable({ customers, onView }) {
               onClick={() => onView(c)}
               className="border-t cursor-pointer hover:bg-slate-50"
             >
-              <td className="px-4 py-3 font-medium whitespace-nowrap">{c.name}</td>
-              <td className="px-4 py-3 whitespace-nowrap">{c.email}</td>
-              <td className="px-4 py-3 whitespace-nowrap">{c.plan}</td>
+              <td className="px-4 py-3 font-medium max-w-[180px] truncate" title={c.name}>
+                {c.name}
+              </td>
+              <td className="px-4 py-3 max-w-[220px] truncate" title={c.email}>
+                {c.email}
+              </td>
+              <td className="px-4 py-3 whitespace-nowrap">{c.plan || "—"}</td>
               <td className="px-4 py-3"><Badge status={c.status} /></td>
               <td className="px-4 py-3 text-right">
                 <button
